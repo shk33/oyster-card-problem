@@ -1,4 +1,5 @@
 import { StationName } from './Station';
+import Fare from './Fare';
 import TransportType from '../enums/TransportType';
 
 class Journey {
@@ -26,6 +27,12 @@ class Journey {
 
     getTransportType() {
         return this.transportType;
+    }
+
+    getFare() {
+        if (this.transportType === TransportType.BUS) {
+            return Fare.BUS_FARE;
+        }
     }
 }
 

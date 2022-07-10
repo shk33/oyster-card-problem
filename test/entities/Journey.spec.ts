@@ -1,4 +1,5 @@
 import Journey from '../../src/entities/Journey';
+import Fare from '../../src/entities/Fare';
 import TransportType from '../../src/enums/TransportType';
 import { StationName } from '../../src/entities/Station';
 
@@ -23,5 +24,13 @@ describe('Journey', () => {
         journey.setEndPoint(end);
 
         expect(journey.getEndPoint()).toEqual(end);
+    });
+
+    it('should return Bus fare when Journey is a Bus Trip', () => {
+        const type = TransportType.BUS;
+
+        const journey = new Journey(type, null);
+
+        expect(journey.getFare()).toEqual(Fare.BUS_FARE);
     });
 });
