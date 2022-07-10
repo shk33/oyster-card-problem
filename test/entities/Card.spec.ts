@@ -6,9 +6,16 @@ describe('Card', () => {
         expect(card.getCurrentCredit()).toEqual(0);
     });
 
-    it('should have inital fare of zero', () => {
+    it('should set current credit', () => {
         const card = new Card();
-        expect(card.getFare()).toEqual(0);
+        card.setCurrentCredit(12);
+        expect(card.getCurrentCredit()).toEqual(12);
+    });
+
+    it('should add card credit', () => {
+        const card = new Card();
+        card.addCredit(30);
+        expect(card.getCurrentCredit()).toEqual(30);
     });
 
     it('should add card credit', () => {

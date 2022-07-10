@@ -1,3 +1,5 @@
+import Journey from './Journey';
+
 class Card {
     private credit: number;
     private fare: number;
@@ -11,12 +13,21 @@ class Card {
         return this.credit;
     }
 
-    getFare() {
-        return this.fare;
+    setCurrentCredit(amount: number) {
+        this.credit = amount;
     }
 
     addCredit(creditToAdd: number) {
         this.credit += creditToAdd;
+    }
+
+    swipeIn(journey: Journey) {
+        
+    }
+
+    private addCharge(amount: number) {
+        const newBalance = this.credit - amount;
+        this.setCurrentCredit(newBalance);
     }
 }
 

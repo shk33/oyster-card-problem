@@ -8,7 +8,7 @@ describe('Journey', () => {
 
         const type = TransportType.TUBE;
 
-        const journey = new Journey(start, type);
+        const journey = new Journey(type, start);
 
         expect(journey.getStarPoint()).toEqual(start);
         expect(journey.getTransportType()).toEqual(type);
@@ -19,7 +19,7 @@ describe('Journey', () => {
         const type = TransportType.TUBE;
         const end = StationName.HAMMERSMITH;
 
-        const journey = new Journey(start, type);
+        const journey = new Journey(type, start);
         journey.setEndPoint(end);
 
         expect(journey.getEndPoint()).toEqual(end);
