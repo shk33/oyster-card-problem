@@ -1,6 +1,7 @@
 import Journey from '../../src/entities/Journey';
 import Fare from '../../src/entities/Fare';
 import TransportType from '../../src/enums/TransportType';
+import Zone from '../../src/enums/Zone';
 import { StationName } from '../../src/entities/Station';
 
 describe('Journey', () => {
@@ -26,11 +27,38 @@ describe('Journey', () => {
         expect(journey.getEndPoint()).toEqual(end);
     });
 
-    it('should return Bus fare when Journey is a Bus Trip', () => {
-        const type = TransportType.BUS;
+    describe('isJourneyInZone()', () => {
+        it('should return true when end and start point have the same zone', () => {
+            const type = TransportType.TUBE;
+            const start = StationName.EARLS_COURT;
+            const end = StationName.HOLBORN;
 
-        const journey = new Journey(type, null);
+            const journey = new Journey(type, start);
+            journey.setEndPoint(end);
 
-        expect(journey.getFare()).toEqual(Fare.BUS_FARE);
+            expect(journey.isJourneyInZone(Zone.ZONE_1)).toEqual(true);
+        });
+
+        it('should return false when end and start point have different zones', () => {
+            const type = TransportType.TUBE;
+            const start = StationName.EARLS_COURT;
+            const end = StationName.WIMBLEDON;
+
+            const journey = new Journey(type, start);
+            journey.setEndPoint(end);
+
+            expect(journey.isJourneyInZone(Zone.ZONE_3)).toEqual(false);
+        });
     });
+
+    describe('getFare()', () => {
+        it('should return Bus fare when Journey is a Bus Trip', () => {
+            const type = TransportType.BUS;
+
+            const journey = new Journey(type, null);
+
+            expect(journey.getFare()).toEqual(Fare.BUS_FARE);
+        });
+    });
+
 });

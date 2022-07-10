@@ -24,6 +24,10 @@ class Card {
         this.makeCharge(fare);
     }
 
+    swipeOut(journey: Journey) {
+        const fare = journey.getFare();
+    }
+
     private makeCharge(amount: number) {
         const newBalance = this.credit - amount;
         this.setCurrentCredit(newBalance);

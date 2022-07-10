@@ -1,6 +1,7 @@
-import { StationName } from './Station';
+import Station, { StationName } from './Station';
 import Fare from './Fare';
 import TransportType from '../enums/TransportType';
+import Zone from '../enums/Zone';
 
 class Journey {
     private startPoint: StationName | null;
@@ -31,6 +32,21 @@ class Journey {
         return this.transportType;
     }
 
+    completeJourney(end: StationName) {
+        this.endPoint = end;
+    }
+
+    isJourneyInZone(zone: Zone): boolean {
+        if (this.startPoint && this.endPoint) {
+            const startZones = Station.getStationZones(this.startPoint);
+            const endZones = Station.getStationZones(this.endPoint);
+
+            return startZones.includes(zone) && endZones.includes(zone);
+        }
+
+        return false;
+    }
+
     getFare(): number {
         if (this.transportType === TransportType.BUS) {
             return Fare.BUS_FARE;
@@ -39,6 +55,8 @@ class Journey {
         if (!this.isCompleted) {
             return Fare.MAX_TUBE_FARE;
         }
+
+        
 
         return 0;
     }
