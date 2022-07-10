@@ -5,13 +5,23 @@ import { StationName } from '../../src/entities/Station';
 describe('Journey', () => {
     it('should initialize a journey', () => {
         const start = StationName.EARLS_COURT;
-        const end = StationName.HAMMERSMITH;
+
         const type = TransportType.TUBE;
 
-        const journey = new Journey(start, end, type);
+        const journey = new Journey(start, type);
 
         expect(journey.getStarPoint()).toEqual(start);
-        expect(journey.getEndPoint()).toEqual(end);
         expect(journey.getTransportType()).toEqual(type);
+    });
+
+    it('should set end point of a journey', () => {
+        const start = StationName.EARLS_COURT;
+        const type = TransportType.TUBE;
+        const end = StationName.HAMMERSMITH;
+
+        const journey = new Journey(start, type);
+        journey.setEndPoint(end);
+
+        expect(journey.getEndPoint()).toEqual(end);
     });
 });

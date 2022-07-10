@@ -3,13 +3,13 @@ import TransportType from '../enums/TransportType';
 
 class Journey {
     private startPoint: StationName;
-    private endPoint: StationName;
+    private endPoint: StationName | null;
     private transportType: TransportType;
 
-    constructor(start: StationName, end: StationName, type: TransportType) {
+    constructor(start: StationName, type: TransportType) {
         this.startPoint = start;
-        this.endPoint = end;
         this.transportType = type;
+        this.endPoint = null;
     }
 
     getStarPoint() {
@@ -18,6 +18,10 @@ class Journey {
 
     getEndPoint() {
         return this.endPoint;
+    }
+
+    setEndPoint(end: StationName) {
+        this.endPoint = end;
     }
 
     getTransportType() {
