@@ -22,10 +22,11 @@ class Card {
     }
 
     swipeIn(journey: Journey) {
-        
+        const fare = journey.getFare();
+        this.makeCharge(fare);
     }
 
-    private addCharge(amount: number) {
+    private makeCharge(amount: number) {
         const newBalance = this.credit - amount;
         this.setCurrentCredit(newBalance);
     }

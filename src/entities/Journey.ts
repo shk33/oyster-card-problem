@@ -29,10 +29,11 @@ class Journey {
         return this.transportType;
     }
 
-    getFare() {
+    getFare(): number {
         if (this.transportType === TransportType.BUS) {
             return Fare.BUS_FARE;
         }
+        return 0;
     }
 }
 
