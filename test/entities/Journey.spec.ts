@@ -28,7 +28,7 @@ describe('Journey', () => {
     });
 
     describe('isJourneyInZone()', () => {
-        it('should return true when end and start point have the same zone', () => {
+        it('should return true when end and start point are in the same zone', () => {
             const type = TransportType.TUBE;
             const start = StationName.EARLS_COURT;
             const end = StationName.HOLBORN;
@@ -39,7 +39,7 @@ describe('Journey', () => {
             expect(journey.isJourneyInZone(Zone.ZONE_1)).toEqual(true);
         });
 
-        it('should return false when end and start point have different zones', () => {
+        it('should return false when end and start point are in different zones', () => {
             const type = TransportType.TUBE;
             const start = StationName.EARLS_COURT;
             const end = StationName.WIMBLEDON;
@@ -48,6 +48,41 @@ describe('Journey', () => {
             journey.setEndPoint(end);
 
             expect(journey.isJourneyInZone(Zone.ZONE_3)).toEqual(false);
+        });
+    });
+
+    describe('getJourneyMinDistance()', () => {
+        it('should return 0 when end and start point are in the zone 1', () => {
+            const type = TransportType.TUBE;
+            const start = StationName.EARLS_COURT;
+            const end = StationName.HOLBORN;
+
+            const journey = new Journey(type, start);
+            journey.setEndPoint(end);
+
+            expect(journey.getJourneyMinDistance()).toEqual(0);
+        });
+
+        it('should return 0 when end and start point are in the zone 2', () => {
+            const type = TransportType.TUBE;
+            const start = StationName.EARLS_COURT;
+            const end = StationName.HAMMERSMITH;
+
+            const journey = new Journey(type, start);
+            journey.setEndPoint(end);
+
+            expect(journey.getJourneyMinDistance()).toEqual(0);
+        });
+
+        it('should return 2 when end is in zone 3 and start is in zone 1', () => {
+            const type = TransportType.TUBE;
+            const start = StationName.HOLBORN;
+            const end = StationName.WIMBLEDON;
+
+            const journey = new Journey(type, start);
+            journey.setEndPoint(end);
+
+            expect(journey.getJourneyMinDistance()).toEqual(2);
         });
     });
 

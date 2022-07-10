@@ -47,6 +47,27 @@ class Journey {
         return false;
     }
 
+    getJourneyMinDistance(): number {
+        if (this.startPoint && this.endPoint) {
+            const startZones = Station.getStationZones(this.startPoint);
+            const endZones = Station.getStationZones(this.endPoint);
+
+            const zonesIntersection = startZones.filter((x) =>
+                endZones.includes(x),
+            );
+            const isJourneyInSameZone = zonesIntersection.length > 0;
+
+            if (isJourneyInSameZone) return 0;
+
+            const minStartDistance = Math.min(...startZones);
+            const minEndDistance = Math.min(...endZones);
+
+            return Math.abs(minStartDistance - minEndDistance);
+        }
+
+        return 0;
+    }
+
     getFare(): number {
         if (this.transportType === TransportType.BUS) {
             return Fare.BUS_FARE;
