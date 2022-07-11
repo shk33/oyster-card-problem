@@ -1,11 +1,10 @@
 class Fare {
-    static ZONE_ONE_FARE = 2.5;
-    static ANY_ZONE_OUTSIDE_ZONE_ONE_FARE = 2.0;
-    static TWO_ZONES_INC_ZONE_ONE_FARE = 3.0;
-    static TWO_ZONES_EXC_ZONE_ONE_FARE = 2.25;
-    static THREE_ZONES_FAIR = 3.2;
+    static COST_ONLY_ZONE_ONE = 2.5;
+    static COST_ONE_ZONE_NOT_INCLUDING_ZONE_ONE = 2.0;
+    static COST_TWO_ZONES_INCLUDING_ZONE_ONE = 3.0;
+    static COST_TWO_ZONES_EXCLUDING_ZONE_ONE = 2.25;
     static BUS_FARE = 1.8;
-    static MAX_TUBE_FARE = 3.2;
+    static MAX_TUBE_COST = 3.2;
 }
 
 export default Fare;

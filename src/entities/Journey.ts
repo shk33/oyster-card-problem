@@ -34,6 +34,7 @@ class Journey {
 
     completeJourney(end: StationName) {
         this.endPoint = end;
+        this.isCompleted = true;
     }
 
     isJourneyInZone(zone: Zone): boolean {
@@ -42,6 +43,17 @@ class Journey {
             const endZones = Station.getStationZones(this.endPoint);
 
             return startZones.includes(zone) && endZones.includes(zone);
+        }
+
+        return false;
+    }
+
+    doesJourneyIncludesZone(zone: Zone): boolean {
+        if (this.startPoint && this.endPoint) {
+            const startZones = Station.getStationZones(this.startPoint);
+            const endZones = Station.getStationZones(this.endPoint);
+
+            return startZones.includes(zone) || endZones.includes(zone);
         }
 
         return false;
@@ -59,8 +71,8 @@ class Journey {
 
             if (isJourneyInSameZone) return 0;
 
-            const minStartDistance = Math.min(...startZones);
-            const minEndDistance = Math.min(...endZones);
+            const minStartDistance = Math.max(...startZones);
+            const minEndDistance = Math.max(...endZones);
 
             return Math.abs(minStartDistance - minEndDistance);
         }
@@ -74,10 +86,34 @@ class Journey {
         }
 
         if (!this.isCompleted) {
-            return Fare.MAX_TUBE_FARE;
+            return Fare.MAX_TUBE_COST;
         }
 
-        
+        if (this.isCompleted && this.transportType === TransportType.TUBE) {
+            const journeyMinDistance = this.getJourneyMinDistance();
+
+            if (journeyMinDistance == 0) {
+                const isJourneyInZone1 = this.isJourneyInZone(Zone.ZONE_1);
+
+                if (isJourneyInZone1) {
+                    return Fare.COST_ONLY_ZONE_ONE;
+                }
+                return Fare.COST_ONE_ZONE_NOT_INCLUDING_ZONE_ONE;
+            }
+
+            if (journeyMinDistance == 1) {
+                const doesJourneyIncludesZone = this.doesJourneyIncludesZone(
+                    Zone.ZONE_1,
+                );
+
+                if (doesJourneyIncludesZone) {
+                    return Fare.COST_TWO_ZONES_INCLUDING_ZONE_ONE;
+                }
+                return Fare.COST_TWO_ZONES_EXCLUDING_ZONE_ONE;
+            }
+
+            return Fare.MAX_TUBE_COST;
+        }
 
         return 0;
     }

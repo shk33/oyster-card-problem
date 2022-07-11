@@ -51,7 +51,7 @@ describe('Card', () => {
             card.addCredit(initalCredit);
             card.swipeIn(tubeJourney);
 
-            const currentCredit = initalCredit - Fare.MAX_TUBE_FARE;
+            const currentCredit = initalCredit - Fare.MAX_TUBE_COST;
             expect(card.getCurrentCredit()).toEqual(currentCredit);
         });
     });
