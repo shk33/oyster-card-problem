@@ -2,6 +2,7 @@ import Station, { StationName } from './Station';
 import Fare from './Fare';
 import TransportType from '../enums/TransportType';
 import Zone from '../enums/Zone';
+import { findSmallestDifference } from '../helper/Helper';
 
 class Journey {
     private startPoint: StationName | null;
@@ -75,10 +76,7 @@ class Journey {
 
             if (isJourneyInSameZone) return 0;
 
-            const minStartDistance = Math.max(...startZones);
-            const minEndDistance = Math.max(...endZones);
-
-            return Math.abs(minStartDistance - minEndDistance);
+            return findSmallestDifference(startZones, endZones);
         }
 
         return 0;
