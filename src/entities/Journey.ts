@@ -37,6 +37,10 @@ class Journey {
         this.isCompleted = true;
     }
 
+    isJourneyTubeType() {
+        return this.transportType === TransportType.TUBE;
+    }
+
     isJourneyInZone(zone: Zone): boolean {
         if (this.startPoint && this.endPoint) {
             const startZones = Station.getStationZones(this.startPoint);
@@ -116,6 +120,10 @@ class Journey {
         }
 
         return 0;
+    }
+
+    getMaximumPossibleFare() {
+        return Fare.MAX_TUBE_COST;
     }
 }
 

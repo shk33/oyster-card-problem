@@ -28,31 +28,34 @@ describe('Card', () => {
         expect(card.getCurrentCredit()).toEqual(30);
     });
 
-    describe('Bus journey', () => {
-        it('should swipe in a bus journey and charge the Bus fare ', () => {
-            const card = new Card();
-            const busJourney = new Journey(TransportType.BUS, null);
-            card.addCredit(30);
-            card.swipeIn(busJourney);
+    describe('swipe in', () => {
+        describe('Bus journey', () => {
+            it('should swipe in a bus journey and charge the Bus fare ', () => {
+                const card = new Card();
+                const busJourney = new Journey(TransportType.BUS, null);
+                card.addCredit(30);
+                card.swipeIn(busJourney);
 
-            expect(card.getCurrentCredit()).toEqual(28.2);
+                expect(card.getCurrentCredit()).toEqual(28.2);
+            });
+        });
+
+        describe('Tube journey', () => {
+            it('should swipe in a tube journey and initially charge the Max fare (No swipe out happened)', () => {
+                const card = new Card();
+                const tubeJourney = new Journey(
+                    TransportType.TUBE,
+                    StationName.EARLS_COURT,
+                );
+
+                const initalCredit = 30;
+                card.addCredit(initalCredit);
+                card.swipeIn(tubeJourney);
+
+                const currentCredit = initalCredit - Fare.MAX_TUBE_COST;
+                expect(card.getCurrentCredit()).toEqual(currentCredit);
+            });
         });
     });
 
-    describe('Tube journey', () => {
-        it('should swipe in a tube journey and initially charge the Max fare (No swipe out happened)', () => {
-            const card = new Card();
-            const tubeJourney = new Journey(
-                TransportType.TUBE,
-                StationName.EARLS_COURT,
-            );
-
-            const initalCredit = 30;
-            card.addCredit(initalCredit);
-            card.swipeIn(tubeJourney);
-
-            const currentCredit = initalCredit - Fare.MAX_TUBE_COST;
-            expect(card.getCurrentCredit()).toEqual(currentCredit);
-        });
-    });
 });
